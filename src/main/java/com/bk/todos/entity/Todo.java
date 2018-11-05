@@ -9,11 +9,10 @@ import java.util.Date;
 public class Todo {
     @Id
     private String id;
-    private String user_id;
+    private String userId;
     private String subject;
-    private Date due_date;
-    private String create_at;
-
+    private Date dueDate;
+    private Date createdAt;
 
     public String getId() {
         return id;
@@ -23,12 +22,12 @@ public class Todo {
         this.id = id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getSubject() {
@@ -39,19 +38,19 @@ public class Todo {
         this.subject = subject;
     }
 
-    public Date getDue_date() {
-        return due_date;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setDue_date(Date due_date) {
-        this.due_date = due_date;
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
-    public String getCreate_at() {
-        return create_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreate_at(String create_at) {
-        this.create_at = create_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
