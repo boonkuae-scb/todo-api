@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://todo:True1234!@ds253203.mlab.com:53203/todorest
+
+
+line.bot:
+  channel-token: 'Rpv/POuPXr+xXNd+Eb317QsSUN084YxzPfFBns9r0Ab1wlG1mUdFIMkwgh+73tD+jxseOJS4ZdEx22eWQ3HUOFassCsNgF/Nf2Knz14+hG80d8fyU/BI8oOMdJbLh4vICDW2pECxPbxJZVAScKRJagdB04t89/1O/w1cDnyilFU='
+  channel-secret: 'e815b8354dea63eb3531d700d30f6913'
+  handler:
+    path: /callback
