@@ -1,56 +1,28 @@
 package com.bk.todos.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Document
+@Data
 public class Todo {
     @Id
     private String id;
+
+    @NotBlank(message = "Project name is required")
     private String userId;
-    private String subject;
-    private Date dueDate;
-    private Date createdAt;
 
-    public String getId() {
-        return id;
-    }
+    private String taskName;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
+    private Date date;
 
-    public String getUserId() {
-        return userId;
-    }
+    private Boolean isPin;
+    private Boolean isSuccess;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
 }

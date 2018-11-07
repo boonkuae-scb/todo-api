@@ -2,12 +2,20 @@ spring:
   data:
     mongodb:
       uri: mongodb://todo:True1234!@ds253203.mlab.com:53203/todorest
-    rest:
-      basePath: /api
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src
 
+line:
+  bot:
+    channel-token: 'Rpv/POuPXr+xXNd+Eb317QsSUN084YxzPfFBns9r0Ab1wlG1mUdFIMkwgh+73tD+jxseOJS4ZdEx22eWQ3HUOFassCsNgF/Nf2Knz14+hG80d8fyU/BI8oOMdJbLh4vICDW2pECxPbxJZVAScKRJagdB04t89/1O/w1cDnyilFU='
+    channel-secret: 'e815b8354dea63eb3531d700d30f6913'
+    handler:
+      path: /callback
 
-line.bot:
-  channel-token: 'Rpv/POuPXr+xXNd+Eb317QsSUN084YxzPfFBns9r0Ab1wlG1mUdFIMkwgh+73tD+jxseOJS4ZdEx22eWQ3HUOFassCsNgF/Nf2Knz14+hG80d8fyU/BI8oOMdJbLh4vICDW2pECxPbxJZVAScKRJagdB04t89/1O/w1cDnyilFU='
-  channel-secret: 'e815b8354dea63eb3531d700d30f6913'
-  handler:
-    path: /callback
+  token-url: 'https://api.line.me/oauth2/v2.1/token'
+  channel-id: '1619902299'
+  channel-secret: '52943576761825e7e3507d7a1a4098fd'
+  grant-type: 'authorization_code'
+  redirect-uri: 'http://localhost:8080'
