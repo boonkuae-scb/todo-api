@@ -14,7 +14,6 @@ public class Todo {
     @Id
     private String id;
 
-    @NotBlank(message = "Project name is required")
     private String userId;
 
     private String taskName;

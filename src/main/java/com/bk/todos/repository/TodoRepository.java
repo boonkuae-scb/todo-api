@@ -14,5 +14,5 @@ import java.util.stream.Stream;
 @Repository
 public interface TodoRepository  extends MongoRepository<Todo, String> {
 
-    List<Todo> findAllByUserIdOrderByIsPinDescDateAsc(String userId);
+    List<Todo> findAllByUserIdOrderByIsSuccessAscIsPinDescDateAsc(String userId);
 }

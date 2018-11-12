@@ -1,18 +1,13 @@
 package com.bk.todos.services;
 
 import com.bk.todos.entity.Todo;
+import com.bk.todos.exceptions.TodoException;
 import com.bk.todos.repository.TodoRepository;
-import com.google.common.collect.Iterables;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.TextCriteria;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 @Service
 public class TodoService {
@@ -25,8 +20,25 @@ public class TodoService {
     }
 
     public List<Todo> findAllByUserId(String userId) {
-        return todoRepository.findAllByUserIdOrderByIsPinDescDateAsc(userId);
+        return todoRepository.findAllByUserIdOrderByIsSuccessAscIsPinDescDateAsc(userId);
     }
 
+    public Todo saveOrUpdateTodo(Todo todo) {
+        try {
+            return todoRepository.save(todo);
+        } catch (Exception e) {
+            throw new TodoException("Todo Code '" + todo.getId() + "' already exists");
+        }
+    }
+
+    public Todo updateTodo(Todo todo)
+    {
+        Optional<Todo> todoOptional = todoRepository.findById(todo.getId());
+        if (!todoOptional.isPresent())
+        {
+            throw new TodoException("Todo doesn't exists");
+        }
+        return this.saveOrUpdateTodo(todo);
+    }
 
 }
