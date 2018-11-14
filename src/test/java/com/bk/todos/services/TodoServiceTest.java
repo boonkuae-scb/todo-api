@@ -285,7 +285,7 @@ public class TodoServiceTest {
         todoList.add(mockTodo1);
         todoList.add(mockTodo2);
 
-        when(todoRepository.findAllByUserIdOrderByIsSuccessAscIsPinDescDateAsc(anyString())).thenReturn(todoList);
+        when(todoRepository.findAllByUserIdOrderByIsPinDescDateAsc(anyString())).thenReturn(todoList);
 
         // When
         List<Todo> actual = todoService.findAllByUserId("userId");
@@ -295,6 +295,6 @@ public class TodoServiceTest {
         Assert.assertEquals(mockTodo1.getId(), actual.get(0).getId());
         Assert.assertEquals(mockTodo2.getId(), actual.get(1).getId());
 
-        verify(todoRepository, times(1)).findAllByUserIdOrderByIsSuccessAscIsPinDescDateAsc(anyString());
+        verify(todoRepository, times(1)).findAllByUserIdOrderByIsPinDescDateAsc(anyString());
     }
 }
