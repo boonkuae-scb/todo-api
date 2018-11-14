@@ -22,7 +22,7 @@ public class TodoService {
     }
 
     public List<Todo> findAllByUserId(String userId) {
-        return todoRepository.findAllByUserIdOrderByIsSuccessAscIsPinDescDateAsc(userId);
+        return todoRepository.findAllByUserIdOrderByIsPinDescDateAsc(userId);
     }
 
 
