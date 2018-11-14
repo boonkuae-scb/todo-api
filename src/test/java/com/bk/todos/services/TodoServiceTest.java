@@ -103,6 +103,109 @@ public class TodoServiceTest {
 
 
     @Test
+    public void todoProcessorSuccessWhenInputFullDateTime() {
+
+        // Given
+        Todo mockTodo1 = new Todo();
+        mockTodo1.setId("TD1");
+        mockTodo1.setTaskName("Buy milk");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
+        Date date = new Date(2018,5,3,12, 0,0);
+        mockTodo1.setDate(date);
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+
+        // When
+        //Buy milk : 3/5/18 : 13:00
+        String actual = todoService.todoProcessor("1", "Buy milk : 3/5/18 : 13:00");
+
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+
+        // Then
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+        verify(todoRepository, times(1)).save(any(Todo.class));
+    }
+
+    @Test
+    public void todoProcessorSuccessWhenInput2Digit() {
+
+        // Given
+        Todo mockTodo1 = new Todo();
+        mockTodo1.setId("TD1");
+        mockTodo1.setTaskName("Buy milk");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
+        Date date = new Date(2018,5,3,12, 0,0);
+        mockTodo1.setDate(date);
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+
+        // When
+        //Buy milk : 03/05/18 : 13:00
+        String actual = todoService.todoProcessor("1", "Buy milk : 03/05/18 : 13:00");
+
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+
+        // Then
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+        verify(todoRepository, times(1)).save(any(Todo.class));
+    }
+
+    @Test
+    public void todoProcessorSuccessWhenInput1M2D() {
+
+        // Given
+        Todo mockTodo1 = new Todo();
+        mockTodo1.setId("TD1");
+        mockTodo1.setTaskName("Buy milk");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
+        Date date = new Date(2018,5,3,12, 0,0);
+        mockTodo1.setDate(date);
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+
+        // When
+        //Buy milk : 03/05/18 : 13:00
+        String actual = todoService.todoProcessor("1", "Buy milk : 3/13/18 : 13:00");
+
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+
+        // Then
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+        verify(todoRepository, times(1)).save(any(Todo.class));
+    }
+
+    @Test
+    public void todoProcessorSuccessWhenInput2M1D() {
+
+        // Given
+        Todo mockTodo1 = new Todo();
+        mockTodo1.setId("TD1");
+        mockTodo1.setTaskName("Buy milk");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
+        Date date = new Date(2018,5,3,12, 0,0);
+        mockTodo1.setDate(date);
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+
+        // When
+        //Buy milk : 03/05/18 : 13:00
+        String actual = todoService.todoProcessor("1", "Buy milk : 3/10/18 : 13:00");
+
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+        // Then
+        Assert.assertEquals("Create new Todo - "+ mockTodo1.getTaskName()+" : "+ mockTodo1.getDate()+" successful", actual);
+
+        verify(todoRepository, times(1)).save(any(Todo.class));
+    }
+
+    @Test
     public void todoProcessorSuccessWhenNotInputTime() throws ParseException {
         // Given
         Todo mockTodo1 = new Todo();

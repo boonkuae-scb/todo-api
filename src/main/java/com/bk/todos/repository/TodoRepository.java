@@ -1,18 +1,17 @@
 package com.bk.todos.repository;
 
 import com.bk.todos.entity.Todo;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Repository
 public interface TodoRepository  extends MongoRepository<Todo, String> {
 
+    Todo findOneById(String Id);
+    List<Todo> findByDateLessThanAndIsSuccessIsFalseOrderByDateAsc(Date date);
+    List<Todo> findByUpdatedAtGreaterThanAndIsSuccessIsTrueOrderByDateAsc(Date date);
     List<Todo> findAllByUserIdOrderByIsSuccessAscIsPinDescDateAsc(String userId);
 }
