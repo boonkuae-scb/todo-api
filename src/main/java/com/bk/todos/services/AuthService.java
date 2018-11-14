@@ -20,19 +20,19 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class AuthService {
 
-    @Value("${line.token-url}")
+    @Value("${line.token.token-url}")
     private String getAccessTokenUrl;
 
-    @Value("${line.channel-id}")
+    @Value("${line.token.channel-id}")
     private String clientId;
 
-    @Value("${line.channel-secret}")
+    @Value("${line.token.channel-secret}")
     private String clientSecret;
 
-    @Value("${line.grant-type}")
+    @Value("${line.token.grant-type}")
     private String grantType;
 
-    @Value("${line.redirect-uri}")
+    @Value("${line.token.redirect-uri}")
     private String redirectUri;
 
     private RestTemplate restTemplate;
