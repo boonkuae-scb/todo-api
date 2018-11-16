@@ -94,8 +94,13 @@ public class TodoService {
             }
 
             if (todoArray.length == 3) {
-                String timePattern = "\\d{2}:\\d{2}";
-                if (!todoArray[2].matches(timePattern)) {
+                String timePattern1 = "\\d{2}:\\d{2}";
+                String timePattern2 = "\\d{2}:\\d{1}";
+                String timePattern3 = "\\d{1}:\\d{2}";
+                if (!todoArray[2].matches(timePattern1) &&
+                        !todoArray[2].matches(timePattern2) &&
+                        !todoArray[2].matches(timePattern3)
+                ) {
                     return "Input invalid time format( Type help for more detail )";
                 }
                 defaultTime = todoArray[2];
