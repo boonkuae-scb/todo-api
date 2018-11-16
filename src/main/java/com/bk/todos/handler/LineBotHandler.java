@@ -1,7 +1,6 @@
 package com.bk.todos.handler;
 
 
-import com.bk.todos.entity.Todo;
 import com.bk.todos.services.TodoService;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
@@ -12,8 +11,6 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.Date;
 
 @LineMessageHandler
 public class LineBotHandler {

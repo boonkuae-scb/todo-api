@@ -1,8 +1,7 @@
 package com.bk.todos.model;
 
 public enum Response {
-    SUCCESS("success"),
-    ERROR("error");
+    SUCCESS("success");
 
     private final String content;
 

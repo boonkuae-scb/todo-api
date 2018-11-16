@@ -15,10 +15,9 @@ import java.util.concurrent.ExecutionException;
 
 @Component
 public class LineNotifyScheduler {
+    private final TodoService todoService;
     @Value("${line.bot.channel-token}")
     private String accessToken;
-
-    private final TodoService todoService;
 
     @Autowired
     public LineNotifyScheduler(TodoService todoService) {

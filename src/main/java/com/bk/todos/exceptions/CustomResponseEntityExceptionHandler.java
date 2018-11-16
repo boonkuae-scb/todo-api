@@ -12,8 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
-    public final ResponseEntity<TodoExceptionResponse> handleProjectIdentifierException(TodoException ex, WebRequest request)
-    {
+    public final ResponseEntity<TodoExceptionResponse> handleProjectIdentifierException(TodoException ex, WebRequest request) {
         TodoExceptionResponse exceptionResponse = new TodoExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }

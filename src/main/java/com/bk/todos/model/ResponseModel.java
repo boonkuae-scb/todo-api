@@ -16,11 +16,6 @@ public class ResponseModel {
         this.data = data;
     }
 
-    public ResponseModel(String message) {
-        this.message = message;
-        this.data = "";
-    }
-
     public HttpEntity<ResponseModel> build(HttpStatus status) {
         return new ResponseEntity<>(new ResponseModel(this.message, this.data), status);
     }

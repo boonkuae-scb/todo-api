@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/todo")
@@ -35,7 +34,7 @@ public class TodoController {
     }
 
     @PutMapping("/{todoId}")
-    public ResponseEntity<?> updateProject( @Valid @RequestBody Todo todo, BindingResult result) {
+    public ResponseEntity<?> updateProject(@Valid @RequestBody Todo todo, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorServices.MapValidationService(result);
         if (errorMap != null) return errorMap;
 

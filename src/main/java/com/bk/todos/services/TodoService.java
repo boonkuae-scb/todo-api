@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TodoService {
@@ -29,7 +32,7 @@ public class TodoService {
     public Map<String, TextMessage> processPendingTodo() {
         List<Todo> pendingTodoList = todoRepository.findByDateLessThanAndIsSuccessIsFalseOrderByDateAsc(new Date());
         Map<String, TextMessage> lineMessages = new HashMap<>();
-        BuildTextMessage(pendingTodoList, lineMessages,"Tasks to be done.\n\n");
+        BuildTextMessage(pendingTodoList, lineMessages, "Tasks to be done.\n\n");
 
         return lineMessages;
     }
@@ -38,24 +41,22 @@ public class TodoService {
     public Map<String, TextMessage> processSummaryTodo() {
         Date last24Hr = new Date(new Date().getTime() - 86400000);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        System.out.println("last24Hr => "+formatter.format(last24Hr));
-
         List<Todo> completedTodoList = todoRepository.findByUpdatedAtGreaterThanAndIsSuccessIsTrueOrderByDateAsc(last24Hr);
         Map<String, TextMessage> lineMessages = new HashMap<>();
-        BuildTextMessage(completedTodoList, lineMessages,"Tasks completed .\n\n");
+        BuildTextMessage(completedTodoList, lineMessages, "Tasks completed .\n\n");
 
         return lineMessages;
     }
 
-    private void BuildTextMessage( List<Todo> pendingComplete, Map<String, TextMessage> lineMessages, String headerMessage) {
+    private void BuildTextMessage(List<Todo> pendingComplete, Map<String, TextMessage> lineMessages, String headerMessage) {
         for (Todo todo : pendingComplete) {
             TextMessage message = lineMessages.get(todo.getUserId());
             if (message == null) {
-                TextMessage textMessage = new TextMessage(headerMessage+todo.getTaskName() + "\n");
+                TextMessage textMessage = new TextMessage(headerMessage + todo.getTaskName() + "\n");
                 lineMessages.put(todo.getUserId(), textMessage);
 
             } else {
-                TextMessage newMessage = new TextMessage(message.getText() + todo.getTaskName()+ "\n");
+                TextMessage newMessage = new TextMessage(message.getText() + todo.getTaskName() + "\n");
                 lineMessages.put(todo.getUserId(), newMessage);
             }
         }

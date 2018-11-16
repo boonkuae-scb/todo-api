@@ -20,6 +20,6 @@ public class AuthController {
     @PostMapping()
     public HttpEntity<ResponseModel> getToken(@RequestBody AuthRequest request
     ) {
-        return new ResponseModel(Response.SUCCESS.getContent(), authService.getAccessToken(request)).build(HttpStatus.OK);
+        return new ResponseModel(Response.SUCCESS.getContent(), authService.callRequestAccessToken(request)).build(HttpStatus.OK);
     }
 }
