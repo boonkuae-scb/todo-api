@@ -33,7 +33,6 @@ docker stop todo-api-default && docker rm todo-api-default && docker rmi todo-ap
 ```
 
 
-
 ```
 mvn package -DskipTests=true docker:build -Dtodo-profile=docker
 
