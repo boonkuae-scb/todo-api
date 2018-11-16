@@ -97,9 +97,11 @@ public class TodoService {
                 String timePattern1 = "\\d{2}:\\d{2}";
                 String timePattern2 = "\\d{2}:\\d{1}";
                 String timePattern3 = "\\d{1}:\\d{2}";
+                String timePattern4 = "\\d{1}:\\d{1}";
                 if (!todoArray[2].matches(timePattern1) &&
                         !todoArray[2].matches(timePattern2) &&
-                        !todoArray[2].matches(timePattern3)
+                        !todoArray[2].matches(timePattern3) &&
+                        !todoArray[2].matches(timePattern1)
                 ) {
                     return "Input invalid time format( Type help for more detail )";
                 }
