@@ -130,8 +130,9 @@ public class TodoService {
                     ) {
                         return "Input invalid date format( Type help for more detail )";
                     }
+                    date = formatter.parse(todoArray[1] + " " + defaultTime);
+                    break;
             }
-            date = formatter.parse(todoArray[1] + " " + defaultTime);
 
 
             Todo todo = new Todo();
