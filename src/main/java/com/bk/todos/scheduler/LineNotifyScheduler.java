@@ -24,7 +24,6 @@ public class LineNotifyScheduler {
         this.todoService = todoService;
     }
 
-
     @Scheduled(cron = "* 1 12 * * *")
     public void pushPendingTodoMessage() {
         System.out.println("pushPendingTodoMessage - " + System.currentTimeMillis() / 1000);
