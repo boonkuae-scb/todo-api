@@ -93,7 +93,6 @@ public class TodoService {
                 return "Input task name cloud not be empty( Type help for more detail )";
             }
 
-
             if (todoArray.length == 3) {
                 String timePattern = "\\d{2}:\\d{2}";
                 if (!todoArray[2].matches(timePattern)) {
@@ -127,6 +126,8 @@ public class TodoService {
                         return "Input invalid date format( Type help for more detail )";
                     }
             }
+            date = formatter.parse(todoArray[1] + " " + defaultTime);
+
 
             Todo todo = new Todo();
             todo.setUserId(userId);
