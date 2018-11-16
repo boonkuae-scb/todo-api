@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -45,7 +44,7 @@ public class AuthControllerUnitTest {
     public void getTokenHappyPath() throws Exception {
         AuthRequest mockAuthRequest = new AuthRequest();
         mockAuthRequest.setCode("000010");
-        String jsonPost = "{\"code\": \""+mockAuthRequest.getCode()+"\"}";
+        String jsonPost = "{\"code\": \"" + mockAuthRequest.getCode() + "\"}";
 
         AuthResponse mockAuthResponse = new AuthResponse();
         mockAuthResponse.setScope("test");
@@ -57,8 +56,8 @@ public class AuthControllerUnitTest {
         mockMvc
                 .perform(
                         post("/api/auth")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonPost)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonPost)
                 )
                 .andExpect(status().isOk()).andReturn();
 
