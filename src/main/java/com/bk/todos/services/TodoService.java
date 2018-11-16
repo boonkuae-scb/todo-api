@@ -101,7 +101,7 @@ public class TodoService {
                 if (!todoArray[2].matches(timePattern1) &&
                         !todoArray[2].matches(timePattern2) &&
                         !todoArray[2].matches(timePattern3) &&
-                        !todoArray[2].matches(timePattern1)
+                        !todoArray[2].matches(timePattern4)
                 ) {
                     return "Input invalid time format( Type help for more detail )";
                 }
