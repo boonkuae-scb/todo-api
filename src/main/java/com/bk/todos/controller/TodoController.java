@@ -40,5 +40,4 @@ public class TodoController {
 
         return new ResponseEntity<>(todoService.updateTodo(todo), HttpStatus.OK);
     }
-
 }

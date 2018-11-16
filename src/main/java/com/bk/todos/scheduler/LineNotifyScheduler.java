@@ -25,22 +25,22 @@ public class LineNotifyScheduler {
     }
 
 
-    @Scheduled(cron = "* * 12 * * *")
+    @Scheduled(cron = "0 * 12 * * *")
     public void pushPendingTodoMessage() {
         System.out.println("pushPendingTodoMessage - " + System.currentTimeMillis() / 1000);
-        Map<String, TextMessage> messageList = todoService.processPendingTodo();
-        for (Map.Entry<String, TextMessage> message : messageList.entrySet()) {
-            this.pushLineMessage(message.getKey(), message.getValue());
-        }
+//        Map<String, TextMessage> messageList = todoService.processPendingTodo();
+//        for (Map.Entry<String, TextMessage> message : messageList.entrySet()) {
+//            this.pushLineMessage(message.getKey(), message.getValue());
+//        }
     }
 
-    @Scheduled(cron = "* * 18 * * *")
+    @Scheduled(cron = "0 * 18 * * *")
     public void pushSummaryTodoMessage() {
         System.out.println("pushSummaryTodoMessage- " + System.currentTimeMillis() / 1000);
-        Map<String, TextMessage> messageList = todoService.processSummaryTodo();
-        for (Map.Entry<String, TextMessage> message : messageList.entrySet()) {
-            this.pushLineMessage(message.getKey(), message.getValue());
-        }
+//        Map<String, TextMessage> messageList = todoService.processSummaryTodo();
+//        for (Map.Entry<String, TextMessage> message : messageList.entrySet()) {
+//            this.pushLineMessage(message.getKey(), message.getValue());
+//        }
     }
 
     private void pushLineMessage(String userId, TextMessage textMessage) {
