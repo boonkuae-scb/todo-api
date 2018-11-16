@@ -34,7 +34,7 @@ public class TodoController {
     }
 
     @PutMapping("/{todoId}")
-    public ResponseEntity<?> updateProject(@Valid @RequestBody Todo todo, BindingResult result) {
+    public ResponseEntity<?> updateTodo(@Valid @RequestBody Todo todo, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorServices.MapValidationService(result);
         if (errorMap != null) return errorMap;
 

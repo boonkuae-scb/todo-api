@@ -63,7 +63,7 @@ public class TodoService {
     }
 
 
-    private Todo saveOrUpdateTodo(Todo todo) {
+    public Todo saveOrUpdateTodo(Todo todo) {
         return todoRepository.save(todo);
     }
 
