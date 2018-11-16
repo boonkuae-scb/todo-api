@@ -18,8 +18,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping()
-    public HttpEntity<ResponseModel> getToken(@RequestBody AuthRequest request
-    ) {
+    public HttpEntity<ResponseModel> getToken(@RequestBody AuthRequest request) {
         return new ResponseModel(Response.SUCCESS.getContent(), authService.callRequestAccessToken(request)).build(HttpStatus.OK);
     }
 }

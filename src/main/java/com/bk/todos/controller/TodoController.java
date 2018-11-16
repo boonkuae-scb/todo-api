@@ -18,13 +18,11 @@ import java.util.List;
 public class TodoController {
 
     private final TodoService todoService;
-    private final MapValidationErrorServices mapValidationErrorServices;
 
 
     @Autowired
-    public TodoController(TodoService todoService, MapValidationErrorServices mapValidationErrorServices) {
+    public TodoController(TodoService todoService) {
         this.todoService = todoService;
-        this.mapValidationErrorServices = mapValidationErrorServices;
 
     }
 
@@ -35,9 +33,6 @@ public class TodoController {
 
     @PutMapping("/{todoId}")
     public ResponseEntity<?> updateTodo(@Valid @RequestBody Todo todo, BindingResult result) {
-        ResponseEntity<?> errorMap = mapValidationErrorServices.MapValidationService(result);
-        if (errorMap != null) return errorMap;
-
         return new ResponseEntity<>(todoService.updateTodo(todo), HttpStatus.OK);
     }
 }
