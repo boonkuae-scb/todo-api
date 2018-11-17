@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TodoService {
@@ -81,43 +78,54 @@ public class TodoService {
     }
 
     public String todoProcessor(String userId, String todoContent) {
-        String defaultTime = "12:00";
-        Date date = null;
-        String[] todoArray = todoContent.split(" : ");
+        int[] dateTimeInput = new int[5]; // {dd,MM,yyyy,H,i}
+        dateTimeInput[3] = 12;
+        dateTimeInput[4] =0;
+        String[] todoInputArray = todoContent.split(" : ");
         try {
-            if (todoArray.length < 2 || todoArray.length > 3) {
+            if (todoInputArray.length < 2 || todoInputArray.length > 3) {
                 return "Input wrong format( Type help for more detail )";
             }
 
-            if (todoArray[0].isEmpty()) {
+            if (todoInputArray[0].isEmpty()) {
                 return "Input task name cloud not be empty( Type help for more detail )";
             }
 
-            if (todoArray.length == 3) {
+            if (todoInputArray.length == 3) {
                 String timePattern1 = "\\d{2}:\\d{2}";
                 String timePattern2 = "\\d{2}:\\d{1}";
                 String timePattern3 = "\\d{1}:\\d{2}";
                 String timePattern4 = "\\d{1}:\\d{1}";
-                if (!todoArray[2].matches(timePattern1) &&
-                        !todoArray[2].matches(timePattern2) &&
-                        !todoArray[2].matches(timePattern3) &&
-                        !todoArray[2].matches(timePattern4)
+                if (!todoInputArray[2].matches(timePattern1) &&
+                        !todoInputArray[2].matches(timePattern2) &&
+                        !todoInputArray[2].matches(timePattern3) &&
+                        !todoInputArray[2].matches(timePattern4)
                 ) {
                     return "Input invalid time format( Type help for more detail )";
                 }
-                defaultTime = todoArray[2];
+                String[] newTime = todoInputArray[2].split(":");
+                dateTimeInput[4] = Integer.parseInt(newTime[0].trim());
+                dateTimeInput[5] = Integer.parseInt(newTime[1].trim());
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-            switch (todoArray[1].trim().toLowerCase()) {
+            Calendar cal = Calendar.getInstance();
+            switch (todoInputArray[1].trim().toLowerCase()) {
                 case "today":
-                    SimpleDateFormat today = new SimpleDateFormat("dd/M/yy");
-                    date = formatter.parse(today.format(new Date()) + " " + defaultTime);
+
+                    Date today = new Date();
+                    cal.setTime(today);
+                    dateTimeInput[0] = cal.get(Calendar.DATE);
+                    dateTimeInput[1] = cal.get(Calendar.MONTH);
+                    dateTimeInput[2] = cal.get(Calendar.YEAR);
+
                     break;
                 case "tomorrow":
-                    SimpleDateFormat tomorrowFormat = new SimpleDateFormat("dd/M/yy");
                     Date tomorrow = new Date(new Date().getTime() + 86400000);
-                    date = formatter.parse(tomorrowFormat.format(tomorrow) + " " + defaultTime);
+                    cal.setTime(tomorrow);
+                    dateTimeInput[0] = cal.get(Calendar.DATE);
+                    dateTimeInput[1] = cal.get(Calendar.MONTH);
+                    dateTimeInput[2] = cal.get(Calendar.YEAR);
+                    ;
                     break;
                 default:
                     String pattern2M2D = "\\d{2}/\\d{2}/\\d{2}";
@@ -125,22 +133,35 @@ public class TodoService {
                     String pattern2M1D = "\\d{2}/\\d{1}/\\d{2}";
                     String pattern1M2D = "\\d{1}/\\d{2}/\\d{2}";
 
-                    if (!todoArray[1].matches(pattern2M2D) &&
-                            !todoArray[1].matches(pattern1M1D) &&
-                            !todoArray[1].matches(pattern2M1D) &&
-                            !todoArray[1].matches(pattern1M2D)
+                    if (!todoInputArray[1].matches(pattern2M2D) &&
+                            !todoInputArray[1].matches(pattern1M1D) &&
+                            !todoInputArray[1].matches(pattern2M1D) &&
+                            !todoInputArray[1].matches(pattern1M2D)
                     ) {
                         return "Input invalid date format( Type help for more detail )";
                     }
-                    date = formatter.parse(todoArray[1] + " " + defaultTime);
+
+                    String[] newDate = todoInputArray[2].split("/");
+                    dateTimeInput[0] = Integer.parseInt(newDate[0]);
+                    dateTimeInput[1] = Integer.parseInt(newDate[1]);
+                    dateTimeInput[2] = Integer.parseInt(newDate[2]);
                     break;
             }
 
+            Calendar calendar = new GregorianCalendar(
+                    dateTimeInput[2],
+                    dateTimeInput[1],
+                    dateTimeInput[0],
+                    dateTimeInput[3],
+                    dateTimeInput[5]
+            );
+
+            Date todoDate = calendar.getTime();
 
             Todo todo = new Todo();
             todo.setUserId(userId);
-            todo.setTaskName(todoArray[0]);
-            todo.setDate(date);
+            todo.setTaskName(todoInputArray[0]);
+            todo.setDate(todoDate);
             todo.setIsPin(false);
             todo.setIsSuccess(false);
             Todo todoSaved = this.saveOrUpdateTodo(todo);
