@@ -104,8 +104,8 @@ public class TodoService {
                     return "Input invalid time format( Type help for more detail )";
                 }
                 String[] newTime = todoInputArray[2].split(":");
-                dateTimeInput[4] = Integer.parseInt(newTime[0].trim());
-                dateTimeInput[5] = Integer.parseInt(newTime[1].trim());
+                dateTimeInput[3] = Integer.parseInt(newTime[0].trim());
+                dateTimeInput[4] = Integer.parseInt(newTime[1].trim());
             }
 
             Calendar cal = Calendar.getInstance();
@@ -141,7 +141,7 @@ public class TodoService {
                         return "Input invalid date format( Type help for more detail )";
                     }
 
-                    String[] newDate = todoInputArray[2].split("/");
+                    String[] newDate = todoInputArray[1].split("/");
                     dateTimeInput[0] = Integer.parseInt(newDate[0].trim());
                     dateTimeInput[1] = Integer.parseInt(newDate[1].trim());
                     dateTimeInput[2] = Integer.parseInt(newDate[2].trim());

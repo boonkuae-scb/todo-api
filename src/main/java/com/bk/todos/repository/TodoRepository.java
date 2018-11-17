@@ -17,4 +17,6 @@ public interface TodoRepository extends MongoRepository<Todo, String> {
     List<Todo> findByUpdatedAtGreaterThanAndIsSuccessIsTrueOrderByDateAsc(Date date);
 
     List<Todo> findAllByUserIdOrderByIsPinDescDateAsc(String userId);
+
+    void deleteById(String Id);
 }

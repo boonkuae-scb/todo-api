@@ -2,7 +2,10 @@ package com.bk.todos.controller;
 
 import com.bk.todos.entity.Todo;
 import com.bk.todos.exceptions.TodoException;
+import com.bk.todos.repository.TodoRepository;
 import com.bk.todos.services.TodoService;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +32,19 @@ public class TodoControllerIntegrationTest {
     @Autowired
     TodoService todoService;
 
-    @Test
-    public void updateTodoHappyPath() {
-        Todo aTodo = new Todo();
-        aTodo.setId("todoIdSuccess");
-        aTodo.setTaskName("Task Name Success");
-        aTodo.setUserId("unitTestUserIdSuccess");
+    @Before
+    public void setUp() throws Exception {
+        // Clear
 
-        todoService.saveOrUpdateTodo(aTodo);
+        // Insert Todo
+        Todo iTodo = new Todo();
+        iTodo.setId("todoIdSuccess");
+        iTodo.setTaskName("Task Name Success");
+        iTodo.setUserId("unitTestUserIdSuccess");
 
-        BindingResult result = mock(BindingResult.class);
-
-        ResponseEntity<?> actual = todoController.updateTodo(aTodo, result);
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        Todo newTodo = todoService.saveOrUpdateTodo(iTodo);
     }
+
 
     @Test
     public void updateTodoFail() {
@@ -61,6 +63,8 @@ public class TodoControllerIntegrationTest {
 
     @Test
     public void getAllTodo() {
+
+
         Todo aTodo = new Todo();
         aTodo.setId("todoIdSuccess");
         aTodo.setTaskName("Task Name Success");
