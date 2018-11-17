@@ -37,7 +37,6 @@ public class TodoService {
 
     public Map<String, TextMessage> processSummaryTodo() {
         Date last24Hr = new Date(new Date().getTime() - 86400000);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         List<Todo> completedTodoList = todoRepository.findByUpdatedAtGreaterThanAndIsSuccessIsTrueOrderByDateAsc(last24Hr);
         Map<String, TextMessage> lineMessages = new HashMap<>();
         BuildTextMessage(completedTodoList, lineMessages, "Tasks completed .\n\n");
@@ -46,14 +45,16 @@ public class TodoService {
     }
 
     private void BuildTextMessage(List<Todo> pendingComplete, Map<String, TextMessage> lineMessages, String headerMessage) {
+        SimpleDateFormat ft = new SimpleDateFormat ("E dd/MM/YYY 'at' hh:mm:ss a");
         for (Todo todo : pendingComplete) {
             TextMessage message = lineMessages.get(todo.getUserId());
+            String textStr = todo.getTaskName() + " - "+ft.format(todo.getDate() +" \n";
             if (message == null) {
-                TextMessage textMessage = new TextMessage(headerMessage + todo.getTaskName() + "\n");
+                TextMessage textMessage = new TextMessage(headerMessage + textStr);
                 lineMessages.put(todo.getUserId(), textMessage);
 
             } else {
-                TextMessage newMessage = new TextMessage(message.getText() + todo.getTaskName() + "\n");
+                TextMessage newMessage = new TextMessage(message.getText() + textStr);
                 lineMessages.put(todo.getUserId(), newMessage);
             }
         }
@@ -169,7 +170,6 @@ public class TodoService {
             }
 
             SimpleDateFormat ft = new SimpleDateFormat ("E dd/MM/YYY 'at' hh:mm:ss a");
-
             return "Create new Todo - " + todoSaved.getTaskName() + " : " + ft.format(todoSaved.getDate() )+ " successful";
         } catch (ParseException e) {
             System.out.println("e.getMessage() = [" + e.getMessage() + "]");
