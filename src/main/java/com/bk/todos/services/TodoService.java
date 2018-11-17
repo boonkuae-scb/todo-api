@@ -142,9 +142,9 @@ public class TodoService {
                     }
 
                     String[] newDate = todoInputArray[2].split("/");
-                    dateTimeInput[0] = Integer.parseInt(newDate[0]);
-                    dateTimeInput[1] = Integer.parseInt(newDate[1]);
-                    dateTimeInput[2] = Integer.parseInt(newDate[2]);
+                    dateTimeInput[0] = Integer.parseInt(newDate[0].trim());
+                    dateTimeInput[1] = Integer.parseInt(newDate[1].trim());
+                    dateTimeInput[2] = Integer.parseInt(newDate[2].trim());
                     break;
             }
 
