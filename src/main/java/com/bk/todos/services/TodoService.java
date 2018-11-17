@@ -153,7 +153,7 @@ public class TodoService {
                     dateTimeInput[1],
                     dateTimeInput[0],
                     dateTimeInput[3],
-                    dateTimeInput[5]
+                    dateTimeInput[4]
             );
 
             Date todoDate = calendar.getTime();
