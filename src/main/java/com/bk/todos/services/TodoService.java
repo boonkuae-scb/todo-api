@@ -45,7 +45,7 @@ public class TodoService {
     }
 
     private void BuildTextMessage(List<Todo> pendingComplete, Map<String, TextMessage> lineMessages, String headerMessage,Boolean isSuccessTask) {
-        SimpleDateFormat ft = new SimpleDateFormat ("E dd MMMM YYYY hh:mm a");
+        SimpleDateFormat ft = new SimpleDateFormat ("EEE dd MMMM YYYY hh:mm a");
         for (Todo todo : pendingComplete) {
             TextMessage message = lineMessages.get(todo.getUserId());
             String textStr = todo.getTaskName() + " - created at "+ft.format(todo.getDate() +" \n");
@@ -173,7 +173,7 @@ public class TodoService {
                 throw new ParseException("Cannot save", 0);
             }
 
-            SimpleDateFormat ft = new SimpleDateFormat ("dddd dd MMMM YYYY hh:mm a");
+            SimpleDateFormat ft = new SimpleDateFormat ("EEE dd MMMM YYYY hh:mm a");
             return "Create new Todo - " + todoSaved.getTaskName() + " : " + ft.format(todoSaved.getDate() )+ " successful";
         } catch (ParseException e) {
             System.out.println("e.getMessage() = [" + e.getMessage() + "]");
