@@ -167,7 +167,10 @@ public class TodoService {
             if (todoSaved == null) {
                 throw new ParseException("Cannot save", 0);
             }
-            return "Create new Todo - " + todoSaved.getTaskName() + " : " + todoSaved.getDate() + " successful";
+
+            SimpleDateFormat ft = new SimpleDateFormat ("E dd/MM/YYY 'at' hh:mm:ss a");
+
+            return "Create new Todo - " + todoSaved.getTaskName() + " : " + ft.format(todoSaved.getDate() )+ " successful";
         } catch (ParseException e) {
             System.out.println("e.getMessage() = [" + e.getMessage() + "]");
             return "Cannot save";
