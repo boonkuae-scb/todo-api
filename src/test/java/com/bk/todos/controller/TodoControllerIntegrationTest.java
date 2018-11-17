@@ -2,16 +2,13 @@ package com.bk.todos.controller;
 
 import com.bk.todos.entity.Todo;
 import com.bk.todos.exceptions.TodoException;
-import com.bk.todos.repository.TodoRepository;
 import com.bk.todos.services.TodoService;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BindingResult;

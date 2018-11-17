@@ -29,7 +29,7 @@ public class TodoService {
     public Map<String, TextMessage> processPendingTodo() {
         List<Todo> pendingTodoList = todoRepository.findByDateLessThanAndIsSuccessIsFalseOrderByDateAsc(new Date());
         Map<String, TextMessage> lineMessages = new HashMap<>();
-        BuildTextMessage(pendingTodoList, lineMessages, "Tasks to be done.\n\n",false);
+        BuildTextMessage(pendingTodoList, lineMessages, "Tasks to be done.\n\n", false);
 
         return lineMessages;
     }
@@ -39,19 +39,19 @@ public class TodoService {
         Date last24Hr = new Date(new Date().getTime() - 86400000);
         List<Todo> completedTodoList = todoRepository.findByUpdatedAtGreaterThanAndIsSuccessIsTrueOrderByDateAsc(last24Hr);
         Map<String, TextMessage> lineMessages = new HashMap<>();
-        BuildTextMessage(completedTodoList, lineMessages, "Tasks completed .\n\n",true);
+        BuildTextMessage(completedTodoList, lineMessages, "Tasks completed .\n\n", true);
 
         return lineMessages;
     }
 
-    private void BuildTextMessage(List<Todo> pendingComplete, Map<String, TextMessage> lineMessages, String headerMessage,Boolean isSuccessTask) {
-        SimpleDateFormat ft = new SimpleDateFormat ("EEE dd MMMM YYYY hh:mm a");
+    private void BuildTextMessage(List<Todo> pendingComplete, Map<String, TextMessage> lineMessages, String headerMessage, Boolean isSuccessTask) {
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
         for (Todo todo : pendingComplete) {
             TextMessage message = lineMessages.get(todo.getUserId());
-            String textStr = todo.getTaskName() + " - created at "+ft.format(todo.getDate() +" \n");
-            if (isSuccessTask)
-            {
-                 textStr = todo.getTaskName() + " - completed at  "+ft.format(todo.getDate() +" \n");
+            System.out.println("todo.getDate() = " + todo.getDate());
+            String textStr = todo.getTaskName() + " - created at " + ft.format(todo.getDate()) + " \n";
+            if (isSuccessTask) {
+                textStr = todo.getTaskName() + " - completed at  " + ft.format(todo.getDate()) + " \n";
             }
             if (message == null) {
                 TextMessage textMessage = new TextMessage(headerMessage + textStr);
@@ -85,7 +85,7 @@ public class TodoService {
     public String todoProcessor(String userId, String todoContent) {
         int[] dateTimeInput = new int[5]; // {dd,MM,yyyy,H,i}
         dateTimeInput[3] = 12;
-        dateTimeInput[4] =0;
+        dateTimeInput[4] = 0;
         String[] todoInputArray = todoContent.split(" : ");
         try {
             if (todoInputArray.length < 2 || todoInputArray.length > 3) {
@@ -173,8 +173,8 @@ public class TodoService {
                 throw new ParseException("Cannot save", 0);
             }
 
-            SimpleDateFormat ft = new SimpleDateFormat ("EEE dd MMMM YYYY hh:mm a");
-            return "Create new Todo - " + todoSaved.getTaskName() + " : " + ft.format(todoSaved.getDate() )+ " successful";
+            SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+            return "Create new Todo - " + todoSaved.getTaskName() + " : " + ft.format(todoSaved.getDate()) + " successful";
         } catch (ParseException e) {
             System.out.println("e.getMessage() = [" + e.getMessage() + "]");
             return "Cannot save";

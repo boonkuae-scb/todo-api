@@ -17,10 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -43,216 +40,209 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void todoProcessorFailWhenWrongFormat() {
+    public void todoProcessor_Fail_When__WrongFormat() {
         String actual = todoService.todoProcessor("1", "Test");
         Assert.assertEquals("Input wrong format( Type help for more detail )", actual);
     }
 
     @Test
-    public void todoProcessorFailWhenWrongTaskName() {
+    public void todoProcessor_Fail_When__InputWrongTaskName() {
         String actual = todoService.todoProcessor("1", " : 22/11/18 : 10:00");
         Assert.assertEquals("Input task name cloud not be empty( Type help for more detail )", actual);
     }
 
 
     @Test
-    public void todoProcessorFailWhenWrongTime() {
+    public void todoProcessor_Fail_When_WrongTime() {
         String actual = todoService.todoProcessor("1", "Task Name : 22/11/18 : 10121:0012");
         Assert.assertEquals("Input invalid time format( Type help for more detail )", actual);
     }
 
     @Test
-    public void todoProcessorSuccessWhenNotInputToday() throws ParseException {
+    public void todoProcessor_Success_When__InputToday() throws ParseException {
         // Given
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-
-        SimpleDateFormat today = new SimpleDateFormat("dd/M/yy 12:00:59");
-        Date date = formatter.parse(today.format(new Date()));
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+        mockTodo1.setDate(cal.getTime());
 
         // When
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+        // Then
         String actual = todoService.todoProcessor("1", "Task Name : today");
+        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful", actual);
 
-
-        // Then
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
+        // Verify
         verify(todoRepository, times(1)).save(any(Todo.class));
 
     }
 
 
     @Test
-    public void todoProcessorSuccessWhenNotInputTomorrow() throws ParseException {
+    public void todoProcessor_Success_When__InputTomorrow() throws ParseException {
         // Given
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-
-        SimpleDateFormat tommorrow = new SimpleDateFormat("dd/M/yy");
-        Date tomorrow = new Date(new Date().getTime() + 86400000);
-        Date date = formatter.parse(tommorrow.format(tomorrow) + " 12:00");
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+        mockTodo1.setDate(calendar.getTime());
 
         // When
-        String actual = todoService.todoProcessor("1", "Task Name : tomorrow");
-
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
 
         // Then
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
+        String actual = todoService.todoProcessor("1", "Task Name : tomorrow");
+        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful", actual);
 
+        // Verify
         verify(todoRepository, times(1)).save(any(Todo.class));
 
     }
 
 
     @Test
-    public void todoProcessorSuccessWhenInputFullDateTime() {
-
+    public void todoProcessor_Success_When__InputFullDateTime() {
         // Given
+        Calendar calendar = new GregorianCalendar(
+                2018,
+                5,
+                3,
+                12,
+                0,
+                0
+        );
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
         mockTodo1.setTaskName("Buy milk");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-        Date date = new Date(2018, 5, 3, 12, 0, 0);
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
-
+        mockTodo1.setDate(calendar.getTime());
 
         // When
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+        // Then
         //Buy milk : 3/5/18 : 13:00
         String actual = todoService.todoProcessor("1", "Buy milk : 3/5/18 : 13:00");
+        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful", actual);
 
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
-
-        // Then
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
+        // Verify
         verify(todoRepository, times(1)).save(any(Todo.class));
     }
 
     @Test
-    public void todoProcessorSuccessWhenInput2Digit() {
+    public void todoProcessor_Success_When__Input2DigitDate() {
 
         // Given
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+        Calendar calendar = Calendar.getInstance();
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
         mockTodo1.setTaskName("Buy milk");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-        Date date = new Date(2018, 5, 3, 12, 0, 0);
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
-
+        mockTodo1.setDate(calendar.getTime());
 
         // When
-        //Buy milk : 03/05/18 : 13:00
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+        // Then
         String actual = todoService.todoProcessor("1", "Buy milk : 03/05/18 : 13:00");
+        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful", actual);
 
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
-
-        // Then
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
+        // Verify
         verify(todoRepository, times(1)).save(any(Todo.class));
     }
 
     @Test
-    public void todoProcessorSuccessWhenInput1M2D() {
+    public void todoProcessor_Success_When_Input1M2D() {
 
         // Given
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+        Calendar calendar = Calendar.getInstance();
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
         mockTodo1.setTaskName("Buy milk");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-        Date date = new Date(2018, 5, 3, 12, 0, 0);
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
-
+        mockTodo1.setDate(calendar.getTime());
 
         // When
-        //Buy milk : 03/05/18 : 13:00
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+        // Then
         String actual = todoService.todoProcessor("1", "Buy milk : 3/13/18 : 13:00");
+        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful", actual);
 
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
-
-        // Then
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
+        // Verify
         verify(todoRepository, times(1)).save(any(Todo.class));
     }
 
     @Test
-    public void todoProcessorSuccessWhenInput2M1D() {
+    public void todoProcessor_Success_When_Input2M1D() {
 
         // Given
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+        Calendar calendar = Calendar.getInstance();
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
         mockTodo1.setTaskName("Buy milk");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-        Date date = new Date(2018, 5, 3, 12, 0, 0);
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
-
+        mockTodo1.setDate(calendar.getTime());
 
         // When
-        //Buy milk : 03/05/18 : 13:00
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+        // Then
         String actual = todoService.todoProcessor("1", "Buy milk : 3/10/18 : 13:00");
+        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful", actual);
 
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
-        // Then
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
-
+        // Verify
         verify(todoRepository, times(1)).save(any(Todo.class));
     }
 
     @Test
-    public void todoProcessorSuccessWhenNotInputTime() throws ParseException {
+    public void todoProcessor_Success_When_NotInputTime() throws ParseException {
         // Given
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+        Calendar calendar = Calendar.getInstance();
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
-        String dateInString = "22/11/18";
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy");
-        Date date = formatter.parse(dateInString);
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+        mockTodo1.setTaskName("Buy milk");
+        mockTodo1.setDate(calendar.getTime());
 
         // When
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+
+        // Then
         String actual = todoService.todoProcessor("1", "Task Name : 22/11/18");
-
-
-        // Then
-        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful", actual);
+        Assert.assertEquals("Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful", actual);
 
         verify(todoRepository, times(1)).save(any(Todo.class));
 
     }
 
     @Test
-    public void todoProcessorSuccessWhenInputTime() throws ParseException {
+    public void todoProcessor_Success_When_InputTime() throws ParseException {
         // Given
+        SimpleDateFormat ft = new SimpleDateFormat("EEE dd MMMM YYYY hh:mm a");
+        Calendar calendar = Calendar.getInstance();
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
-        mockTodo1.setId("Task Name");
-        String dateInString = "22/11/18 13:45";
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yy hh:mm");
-        Date date = formatter.parse(dateInString);
-        mockTodo1.setDate(date);
-        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
+        mockTodo1.setTaskName("Buy milk");
+        mockTodo1.setDate(calendar.getTime());
+        String expect = "Create new Todo - " + mockTodo1.getTaskName() + " : " + ft.format(mockTodo1.getDate()) + " successful";
 
         // When
-        String actual = todoService.todoProcessor("1", "Task Name : 22/11/18 : 13:56");
-
+        Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(mockTodo1);
 
         // Then
-        String expect = "Create new Todo - " + mockTodo1.getTaskName() + " : " + mockTodo1.getDate() + " successful";
+        String actual = todoService.todoProcessor("1", "Task Name : 22/11/18 : 13:56");
         Assert.assertEquals(expect, actual);
 
         verify(todoRepository, times(1)).save(any(Todo.class));
@@ -260,7 +250,7 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void todoProcessorFailWhenCannotSave() {
+    public void todoProcessor_Fail_WhenCannotSave() {
         // Given
         Mockito.when(todoRepository.save(any(Todo.class))).thenReturn(null);
 
@@ -274,14 +264,14 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void todoProcessorFailWhenWrongDateFormat() {
+    public void todoProcessor_Fail_When_WrongDateFormat() {
         String actual = todoService.todoProcessor("1", "Task Name : 22/11/2018 : 10:00");
         Assert.assertEquals("Input invalid date format( Type help for more detail )", actual);
     }
 
 
     @Test
-    public void findAllByUserIdSuccessWhenTodoExist() {
+    public void findAllByUserId_Success_When_TodoExist() {
         // Given
         Todo mockTodo1 = new Todo();
         mockTodo1.setId("TD1");
@@ -308,21 +298,30 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void processPendingTodoHappyPath() {
+    public void processPending_Success_HappyPath() {
+        Calendar calYesterday = Calendar.getInstance();
+        calYesterday.add(Calendar.DATE, -1);
+
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setTaskName("TD1");
         mockTodo1.setUserId("TD1");
-        mockTodo1.setIsPin(false);
+        mockTodo1.setIsSuccess(false);
+        mockTodo1.setDate(calYesterday.getTime());
+
 
         Todo mockTodo2 = new Todo();
         mockTodo2.setTaskName("TD2");
         mockTodo2.setUserId("TD2");
-        mockTodo2.setIsPin(false);
+        mockTodo2.setIsSuccess(false);
+        mockTodo2.setDate(calYesterday.getTime());
+
 
         Todo mockTodo3 = new Todo();
         mockTodo3.setTaskName("TD3");
         mockTodo3.setUserId("TD2");
-        mockTodo3.setIsPin(false);
+        mockTodo3.setIsSuccess(false);
+        mockTodo3.setDate(calYesterday.getTime());
 
 
         List<Todo> mockTodoList = new ArrayList<>();
@@ -343,21 +342,34 @@ public class TodoServiceTest {
 
 
     @Test
-    public void processSummaryHappyPath() {
+    public void processSummary_Success_When_HappyPath() {
+        Calendar calToday = Calendar.getInstance();
+        Calendar calYesterday = Calendar.getInstance();
+        calYesterday.add(Calendar.DATE, -1);
+
+
         Todo mockTodo1 = new Todo();
         mockTodo1.setTaskName("TD1");
         mockTodo1.setUserId("TD1");
         mockTodo1.setIsSuccess(true);
+        mockTodo1.setDate(calYesterday.getTime());
+        mockTodo1.setUpdatedAt(calToday.getTime());
+
 
         Todo mockTodo2 = new Todo();
         mockTodo2.setTaskName("TD2");
         mockTodo2.setUserId("TD2");
         mockTodo2.setIsSuccess(true);
+        mockTodo2.setDate(calYesterday.getTime());
+        mockTodo2.setUpdatedAt(calToday.getTime());
+
 
         Todo mockTodo3 = new Todo();
         mockTodo3.setTaskName("TD3");
         mockTodo3.setUserId("TD2");
         mockTodo3.setIsSuccess(true);
+        mockTodo3.setDate(calYesterday.getTime());
+        mockTodo3.setUpdatedAt(calToday.getTime());
 
 
         List<Todo> mockTodoList = new ArrayList<>();
@@ -367,9 +379,10 @@ public class TodoServiceTest {
 
         // When
         when(todoRepository.findByUpdatedAtGreaterThanAndIsSuccessIsTrueOrderByDateAsc(any())).thenReturn(mockTodoList);
-        Map<String, TextMessage> actual = todoService.processSummaryTodo();
 
+        System.out.println("mockTodoList = " + mockTodoList);
         // Then
+        Map<String, TextMessage> actual = todoService.processSummaryTodo();
         Assert.assertEquals(2, actual.size());
 
         // verify
@@ -377,7 +390,7 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void updateTodoHappyPath() {
+    public void updateTodo_Success_When_HappyPath() {
         // Given
         Todo todoExist = new Todo();
         todoExist.setId("TD1");
@@ -398,7 +411,6 @@ public class TodoServiceTest {
         todoUpdated.setUpdatedAt(new Date());
         todoUpdated.setIsSuccess(true);
 
-
         // when
         when(todoRepository.findOneById(anyString())).thenReturn(todoExist);
         when(todoRepository.save(any())).thenReturn(todoUpdated);
@@ -416,14 +428,13 @@ public class TodoServiceTest {
 
 
     @Test
-    public void updateTodoFailWhenNotExitst() {
+    public void updateTodo_Fail_When_Record_NotExist() {
         // Given
         Todo todoWillUpdate = new Todo();
         todoWillUpdate.setId("TD99");
 
         // when
         when(todoRepository.findOneById(anyString())).thenReturn(null);
-
 
         // Then
         try {
