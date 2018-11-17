@@ -114,17 +114,11 @@ public class TodoService {
 
                     Date today = new Date();
                     cal.setTime(today);
-                    dateTimeInput[0] = cal.get(Calendar.DATE);
-                    dateTimeInput[1] = cal.get(Calendar.MONTH);
-                    dateTimeInput[2] = cal.get(Calendar.YEAR);
-
                     break;
                 case "tomorrow":
                     Date tomorrow = new Date(new Date().getTime() + 86400000);
                     cal.setTime(tomorrow);
-                    dateTimeInput[0] = cal.get(Calendar.DATE);
-                    dateTimeInput[1] = cal.get(Calendar.MONTH);
-                    dateTimeInput[2] = cal.get(Calendar.YEAR);
+
                     ;
                     break;
                 default:
@@ -141,12 +135,17 @@ public class TodoService {
                         return "Input invalid date format( Type help for more detail )";
                     }
 
-                    String[] newDate = todoInputArray[1].split("/");
-                    dateTimeInput[0] = Integer.parseInt(newDate[0].trim());
-                    dateTimeInput[1] = Integer.parseInt(newDate[1].trim());
-                    dateTimeInput[2] = Integer.parseInt("20"+newDate[2].trim());
+                    String pattern = "dd/MM/yy";
+                    SimpleDateFormat format = new SimpleDateFormat(pattern);
+                    Date dateInput = format.parse(todoInputArray[1].trim());
+                    cal.setTime(dateInput);
+
                     break;
             }
+
+            dateTimeInput[0] = cal.get(Calendar.DATE);
+            dateTimeInput[1] = cal.get(Calendar.MONTH);
+            dateTimeInput[2] = cal.get(Calendar.YEAR);
 
             Calendar calendar = new GregorianCalendar(
                     dateTimeInput[2],
