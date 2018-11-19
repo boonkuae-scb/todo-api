@@ -1,7 +1,7 @@
 ## Todo List Api
 
 
-This is a path one of todo application. In this path is focusing on Api and Integrate with LINE Message API.
+There is a path one of todo application. In this path is focusing on Api and Integrate with LINE Message API.
   
    ![QRCode](docs/todo-qr-code.png "qr code chat")
 
