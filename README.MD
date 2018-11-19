@@ -1,9 +1,7 @@
 ## Todo List Api
 
 
-
-This application is a demonstration of the integrate LINE Bot and Your own API.
-This is a path one of todo application. In this path is focusing on todo app Api and Integration with LINE Message API.
+This is a path one of todo application. In this path is focusing on Api and Integrate with LINE Message API.
   
    ![QRCode](docs/todo-qr-code.png "qr code chat")
 
@@ -108,7 +106,7 @@ mvn clean test
     _The values of the parameters are decent on your environment configuration._
 4. Test the docker container is running
 
-        Open URL [http://localhost:8080](http://localhost:8080) and check the page is showing `Whitelabel Error Page` message. That means we can run the application from docker container properly.
+   Open URL [http://localhost:8080](http://localhost:8080) and check the page is showing `Whitelabel Error Page` message. That means we can run the application from docker container properly.
 
 
 5. Store docker images to the Docker repository.
