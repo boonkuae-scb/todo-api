@@ -1,35 +1,35 @@
 ## Todo List Api
 
 
-There is a path one of todo application. In this path is focusing on Api and Integrate with LINE Message API.
+There is a path one of a Todo application. In this path is focusing on Api and Integrate with LINE Message API.
   
    ![QRCode](docs/todo-qr-code.png "qr code chat")
 
 ### Prerequisite
 
 1. LINE Message API account from [https://developers.line.me/en/](https://developers.line.me/en/).The parameters that we need from this step as below.
-     * `channel-token` . A channel token of LINE bot account.
-     * `channel-secret`. A channel secret of LINE bot account.
+     * `channel-token` : A channel token of LINE bot account.
+     * `channel-secret`: A channel secret of LINE bot account.
 2. LINE Web login account from [https://developers.line.me/en/](https://developers.line.me/en/).The parameters that we need from this step as below.
-     * `token-url` . A requests an access token endpoint LINE Web login account.Set this value to `https://api.line.me/oauth2/v2.1/token`
-     * `channel-id`. A channel id of LINE Web login account.
-     * `channel-secret`. A channel secret of LINE Web login account.
-     * `grant-type`. A channel grant-type of LINE Web login account. use `authorization_code`
+     * `token-url` : A requests an access token endpoint LINE Web login account.Set this value to `https://api.line.me/oauth2/v2.1/token`
+     * `channel-id`: A channel id of LINE Web login account.
+     * `channel-secret`: A channel secret of LINE Web login account.
+     * `grant-type`: A channel grant-type of LINE Web login account. use `authorization_code`
 3. MONGODB from [https://mlab.com](https://mlab.com): 
-     We used mongodb to stored date of the Todo Application. I suggest MLab to for mongodb.
+     I used mongodb to stored data of the Todo application.
      * `mongodb_uri` : Mongodb endpoint. 
 
 4. Todo Frontend:
-    I create a sample frontend to manage todo list and also deploy this application to the Heroku. 
-    * `frontend-url`. The frontend of todo application. Use `https://line-todo-manage.herokuapp.com/`
-    * `redirect-uri`. Redirect URL endpoint that LINE will redirect to after logged-in successful.use `https://line-todo-manage.herokuapp.com/auth`
+    I created a sample frontend to manage todo list and also deploy this application to the Heroku. 
+    * `frontend-url`: The frontend of todo application. Use `https://line-todo-manage.herokuapp.com/`
+    * `redirect-uri`: Redirect URL endpoint that LINE will redirect to after logged-in successful.use `https://line-todo-manage.herokuapp.com/auth`
     
 5. To integration test with LINE Bot is required `HTTPS` So, we use **Narok** is handling `HTTPS` on local development environment
     * Register Ngrok Account : [https://dashboard.ngrok.com/user/signup](https://dashboard.ngrok.com/user/signup)
     * Download Ngrok application: [https://ngrok.com/download](https://ngrok.com/download)
     * Ngrok Manual: [https://ngrok.com/docs](https://ngrok.com/docs)
 ### Sep up Development environment
-A step by step series of examples that tell you how to get a development env running
+A step by step series of examples that show you how to get a development env running
 ##### 1. Down load a source code
 ```git
 git clone git@github.com:boonkuaeb/todo-api.git
