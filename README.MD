@@ -93,7 +93,7 @@ mvn clean test
     ```$docker
     mvn package -DskipTests=true docker:build -Dtodo-profile=default
     ```
-    Check `todo-default-img` created.
+    To check `todo-default-img` image was created. Typing  a command below.
       ```docker
       docker images
       ```
