@@ -121,17 +121,17 @@ mvn clean test
         docker images
         ```
       Find the Image Id of `todo-default-img` image.
-      For example I use `todo-default-image-id-xxx` as a Image Id of `todo-default-img`
+      In this case, I use `todo-default-image-id-xxx` as a Image Id of `todo-default-img`
         
-    * Tags  the  `todo-default-image-id-xxx` Image Id from previous step.
-        * `boonkuaeb/todo:latest` is Docker Hub repository name and version
+    * Tags the `todo-default-image-id-xxx` Image Id from previous step.
+        * The `boonkuaeb/todo:latest` parameter is a Docker Hub repository name and version
         
         Run command:
         ```docker
           docker tag todo-default-image-id-xxx boonkuaeb/todo:latest
         ```
         
-    * Push `boonkuaeb/todo:latest` image to Docker-Hub repository
+    * Push `boonkuaeb/todo:latest` image to Docker Hub repository
       ```docker
       docker push boonkuaeb/todo
       ```
