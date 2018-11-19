@@ -60,20 +60,20 @@ mvn clean test
 1. Prepare `HTTPS`
     * Run `./ngrok http 8080`
     * Find the `https` url that Ngrok generated. For example `https://random-url-todo-api.ngrok.io`
-2. Update LINE Bot a Webhook URL
+2. Update Webhook URL of LINE Message API  
     * Go to [https://developers.line.biz/console/](https://developers.line.biz/console/)
-    * Select the provider and chanel that registered form Prerequisite step
+    * Select the provider and chanel that registered form prerequisite step
     * Select Channel Tab.
     * Update the Webhook URL with pattern `https url` + `/callback`. In this case, I use `https://random-url-todo-api.ngrok.io/callback`
    
 3. Add The LINE channel to your LINE mobile application 
     * Go to [https://developers.line.biz/console/](https://developers.line.biz/console/)
-    * Select the chanel that registered from the Prerequisite step
+    * Select the LINE Message API chanel that registered from the prerequisite step
     * Select Channel Tab.
     * Find the QR code image
     * Open your LINE mobile application. 
     * Add new friend via scan QR code.
-    * Check a Friends list on LINE application. You will see new friend name `My Todo App Bot`
+    * Check a friends list on LINE application. You will see new friend name as a `My Todo App Bot`
     
 4. Test Chanel
     * Chat to `My Todo App Bot`
