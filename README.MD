@@ -24,7 +24,7 @@ There is a path one of a Todo application. In this path is focusing on Api and I
     * `frontend-url`: The frontend of todo application. Use `https://line-todo-manage.herokuapp.com/`
     * `redirect-uri`: Redirect URL endpoint that LINE will redirect to after logged-in successful.use `https://line-todo-manage.herokuapp.com/auth`
     
-5. To integration test with LINE Bot is required `HTTPS` So, we use **Narok** is handling `HTTPS` on local development environment
+5. To integration test with LINE Bot is required `HTTPS`.I use **Narok** to handling `HTTPS` on local development environment
     * Register Ngrok Account : [https://dashboard.ngrok.com/user/signup](https://dashboard.ngrok.com/user/signup)
     * Download Ngrok application: [https://ngrok.com/download](https://ngrok.com/download)
     * Ngrok Manual: [https://ngrok.com/docs](https://ngrok.com/docs)
