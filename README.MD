@@ -125,7 +125,8 @@ mvn clean test
         
     * Tags  the  `todo-default-image-id-xxx` Image Id from previous step.
         * `boonkuaeb/todo:latest` is Docker Hub repository name and version
-
+        
+        Run command:
         ```docker
           docker tag todo-default-image-id-xxx boonkuaeb/todo:latest
         ```
