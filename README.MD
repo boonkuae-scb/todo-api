@@ -76,7 +76,7 @@ mvn clean test
     * Check a friends list on LINE application. You will see new friend name as a `My Todo App Bot`
     
 4. Test Chanel
-    * Chat to `My Todo App Bot`
+    * Send chat message to `My Todo App Bot`
     * Input message text : `Buy milk : 3/5/18 : 13:00`
     * Result: 
     
