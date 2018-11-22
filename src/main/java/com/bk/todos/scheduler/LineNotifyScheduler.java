@@ -24,7 +24,7 @@ public class LineNotifyScheduler {
         this.todoService = todoService;
     }
 
-    @Scheduled(cron = "* 1 12 * * *")
+    @Scheduled(cron = "1 1 12 * * *")
     public void pushPendingTodoMessage() {
         System.out.println("pushPendingTodoMessage - " + System.currentTimeMillis() / 1000);
         Map<String, TextMessage> messageList = todoService.processPendingTodo();
@@ -33,7 +33,7 @@ public class LineNotifyScheduler {
         }
     }
 
-    @Scheduled(cron = "* 1 18 * * *")
+    @Scheduled(cron = "1 1 18 * * *")
     public void pushSummaryTodoMessage() {
         System.out.println("pushSummaryTodoMessage- " + System.currentTimeMillis() / 1000);
         Map<String, TextMessage> messageList = todoService.processSummaryTodo();
